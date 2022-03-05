@@ -1,0 +1,8 @@
+{
+  "CAP_TESTING_1": {
+    "target": {
+      "schema": "SYS",
+      "object": "DUMMY"
+    } 
+  }
+}

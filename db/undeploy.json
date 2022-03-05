@@ -1,0 +1,5 @@
+ [
+ 	"src/testing-cap/procedures/UPDATE_RANK.hdbprocedure",
+ 	"src/testing-cap/procedures/UPDATE_SESSION_CONTEXT.hdbprocedure",
+ 	"src/testing-cap/views/SESSIONCONTEXT.hdbview"
+ ]

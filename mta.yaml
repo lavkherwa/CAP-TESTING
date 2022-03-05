@@ -1,0 +1,56 @@
+## Generated mta.yaml based on template version 0.4.0
+## appName = testing-cap
+## language=java; multiTenant=false
+_schema-version: '3.1'
+ID: testing-cap
+version: 1.0.0-SNAPSHOT
+description: "testing-cap application"
+parameters:
+  enable-parallel-deployments: true
+   
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install --production
+      - npx -p @sap/cds-dk cds build --production
+
+modules:
+ # --------------------- SERVER MODULE ------------------------
+ - name: testing-cap-srv
+ # ------------------------------------------------------------
+   type: java
+   path: srv
+   properties:
+     SPRING_PROFILES_ACTIVE: cloud
+   build-parameters:
+     builder: custom
+     commands: [ mvn clean package ]
+     build-result: "target/*.[wj]ar"
+   requires:
+    - name: testing-cap-service-manager
+   provides:
+    - name: srv-api      # required by consumers of CAP services (e.g. approuter)
+      properties:
+        srv-url: ${default-url}
+
+ # -------------------- SIDECAR MODULE ------------------------
+ - name: testing-cap-db-deployer
+ # ------------------------------------------------------------
+   type: hdb
+   path: db  
+   parameters:
+     buildpack: nodejs_buildpack
+   requires:
+    - name: testing-cap-service-manager
+
+
+resources:
+# --------------------SERVICE MANAGER-------------------------
+ - name: testing-cap-service-manager
+# ------------------------------------------------------------
+   type: cloudfoundry.managed-service
+   parameters:
+     service: service-manager 
+     service-plan: container
+

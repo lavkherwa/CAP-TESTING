@@ -1,0 +1,17 @@
+PROCEDURE "UPDATE_RANK" (
+    IN mappingId INTEGER,
+    IN targetRank INTEGER
+  )
+  LANGUAGE SQLSCRIPT
+  SQL SECURITY INVOKER
+  AS BEGIN
+
+ /* WRITE YOUR LOGIC TO UPDATE RANK */
+ 
+ /* Declaring a variable */ 
+ DECLARE mapping_id INTEGER;
+ 
+ /* Assign value */
+ mapping_id = :mappingId;
+
+END;
