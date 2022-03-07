@@ -48,6 +48,11 @@ service TestService {
     entity EnrichedUnifiedTemplateV2 as projection on myTemplateView.EnrichedUnifiedTemplateV2;
 
     // Native HANA proxy view
+    @readonly
     entity SessionContext            as projection on myNativeView.SessionContext;
+    
+    // Native HANA Temporay table based view
+    @readonly
+    entity ProductExtension 		 as projection on myNativeView.ProductExtension;
 
 }
