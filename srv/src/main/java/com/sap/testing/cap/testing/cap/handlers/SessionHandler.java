@@ -77,7 +77,11 @@ public class SessionHandler implements EventHandler {
 			 */
 
 			// Cleanup session context
-			jdbcTemplate.update(String.format("truncate table %s", CLEANUP_GTT));
+			if(environment.getActiveProfiles()[0].equals("cloud")){
+				jdbcTemplate.update(String.format("TRUNCATE TABLE %s", CLEANUP_GTT));	
+			}else {
+				jdbcTemplate.update(String.format("DELETE FROM %s", CLEANUP_GTT));
+			}
 		} catch (final Exception e) {
 			throw new ServiceException(ErrorStatuses.SERVER_ERROR, "something went wrong", e);
 		}
